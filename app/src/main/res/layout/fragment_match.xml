@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/match_linear_lay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="team1100.scouting2017.tabFragments.MatchFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:text="@string/scouter_label"
+        android:textColor="#000000"
+        android:textSize="11pt"/>
+    <EditText
+        android:id="@+id/scouter_name"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/name_hint"
+        android:textSize="12pt"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:text="@string/match_label"
+        android:textColor="#000000"
+        android:textSize="11pt"/>
+    <EditText
+        android:id="@+id/match_number"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/match_hint"
+        android:textSize="12pt"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:text="@string/pos_label"
+        android:textColor="#000000"
+        android:textSize="11pt"/>
+    <Spinner
+        android:id="@+id/position_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="12pt" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:text="@string/team_number"
+        android:textColor="#000000"
+        android:textSize="11pt"/>
+    <EditText
+        android:id="@+id/team_number"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="@string/team_hint"
+        android:textSize="12pt"/>
+
+
+
+</LinearLayout>

@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="team1100.scouting2017.tabFragments.AutoFragment"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:text="@string/high_auto_label"
+        android:textColor="#000000"
+        android:textSize="12pt"/>
+    <NumberPicker
+        android:id="@+id/high_auto_picker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="number"
+        >
+    </NumberPicker>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:text="@string/low_auto_label"
+        android:textColor="#000000"
+        android:textSize="12pt" />
+    <NumberPicker
+        android:id="@+id/low_auto_picker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="number" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:text="@string/gear_auto_label"
+        android:textColor="#000000"
+        android:textSize="11pt" />
+    <NumberPicker
+        android:id="@+id/gear_auto_picker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inputType="number">
+    </NumberPicker>
+    <CheckBox
+        android:id="@+id/line_auto_box"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/line_auto_label"
+        android:textColor="@android:color/black"
+        android:textSize="11pt"/>
+
+</LinearLayout>

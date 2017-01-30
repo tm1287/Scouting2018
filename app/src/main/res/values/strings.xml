@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Scouting 2017</string>
+    <string name="action_settings">Settings</string>
+    <string name="scouter_label">Scouter Name:</string>
+    <string name="match_label">Match Number:</string>
+    <string name="pos_label">Robot Position:</string>
+    <string name="team_number">Team Number:</string>
+    <string name="name_hint">Enter name here</string>
+    <string name="match_hint">Enter match # here</string>
+    <string name="pos_hint">Enter position here (ex \"Red 2\")</string>
+    <string name="team_hint">Enter team number here</string>
+    <string-array name="pos_dropdown_options">
+        <item>Red 1</item>
+        <item>Red 2</item>
+        <item>Red 3</item>
+        <item>Blue 1</item>
+        <item>Blue 2</item>
+        <item>Blue 3</item>
+    </string-array>
+    <string name="high_auto_label">Fuel Scored High:</string>
+    <string name="low_auto_label">Fuel Scored Low:</string>
+    <string name="gear_auto_label">Gears scored:</string>
+    <string name="line_auto_label">Line Crossed?</string>
+    <string name="line_auto_box_label">Check only if black line was crossed</string>
+    <string name="fuel_high_label">Fuel Scored High:</string>
+    <string name="fuel_low_label">Fuel Scored Low:</string>
+    <string name="gear_tele_label">Gears Loaded:</string>
+    <string name="climb_label">Climb Light On?</string>
+    <string name="climb_check_text">Check only if light is on after match ends</string>
+    <string name="no_show_label">No show?</string>
+    <string name="broken_label">Robot broken?</string>
+    <string name="disabled_label">Robot disabled?</string>
+    <string name="foul_label">Received penalty?</string>
+    <string name="pilot_label">Sloppy pilot?</string>
+</resources>
