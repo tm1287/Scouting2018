@@ -3,7 +3,6 @@ package team1100.scouting2017;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.VoiceInteractor;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -16,29 +15,16 @@ public class ConfirmationDialog extends DialogFragment {
     private String noButton;
     private String message;
 
-    private boolean input;
-
     public ConfirmationDialog(){
         yesButton = "";
         noButton = "";
         message = "";
-        input = false;
     }
 
     public void setDialogs(String yesButton, String noButton, String message){
         this.yesButton=yesButton;
         this.noButton=noButton;
         this.message=message;
-    }
-
-    public boolean getValue(){
-        System.out.println("Value retrieved");
-        return input;
-    }
-
-    public void setInput(boolean value){
-        input = value;
-        System.out.println("Value Set");
     }
 
     @Override
@@ -48,7 +34,7 @@ public class ConfirmationDialog extends DialogFragment {
         builder.setMessage(message)
                 .setPositiveButton(yesButton, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((MainActivity)getActivity()).doSubmit();
+                        ((MainActivity)getActivity()).matchVerifyA();
                     }
                 })
                 .setNegativeButton(noButton, new DialogInterface.OnClickListener() {

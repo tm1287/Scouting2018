@@ -6,8 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -74,10 +72,9 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 //Create confirmation dialog to send
-                ConfirmationDialog promptOne = new ConfirmationDialog();
-                promptOne.setDialogs("Yes, I'm sure.", "No! Finna double check.", "Are you sure all data is completed and correct?");
-                promptOne.show(getFragmentManager(), "P_ONE");
-                
+                ConfirmationDialog confirmationDialog = new ConfirmationDialog();
+                confirmationDialog.setDialogs("Yes, I'm sure.", "No! Finna double check.", "Are you sure all data is completed and correct?");
+                confirmationDialog.show(getFragmentManager(), "P_");
             }
         });
 
@@ -114,7 +111,7 @@ public class MainActivity extends FragmentActivity {
         System.out.println("Calling getMatchVaues()");
         String[] data = getMatchValues();
         if (data==null){
-            //TODO: Display incomplete information dialog
+            Snackbar.make(findViewById(android.R.id.content), "Null data: Submit cancelled", Snackbar.LENGTH_LONG).show();
             return;
         }
         //write to file
@@ -166,14 +163,6 @@ public class MainActivity extends FragmentActivity {
         InfoFragment info = (InfoFragment) tabs.get(3);
         System.out.println("Getting match data");
         String[] matchData = match.getData();
-        for(int i = 0; i<matchData.length; i++){
-            System.out.println("Testing null match data");
-            if(matchData[i].equals("")||matchData[i].equals(null)){
-                //Cancels data collection if match data is incomplete
-                System.out.println("Null match line "+i);
-                return null;
-            }
-        }
         System.out.println("Getting auto data");
         String[] autoData = auto.getData();
         System.out.println("Getting tele data");
@@ -286,5 +275,43 @@ public class MainActivity extends FragmentActivity {
             }
             return null;
         }
+    }
+
+    public void matchVerifyA(){
+        MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
+        String name = match.getData()[0];
+        if(name.equals("")||name.equals(null)){
+            MissingInformationDialogA dialogA = new MissingInformationDialogA();
+            dialogA.show(getFragmentManager(), "VER_A");
+        }
+        else matchVerifyB(null);
+    }
+    public void matchVerifyB(String name){
+        MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
+        if(name!=null)match.setName(name);
+        String matchNumber = match.getData()[1];
+        if(matchNumber.equals("")||matchNumber.equals(null)){
+            MissingInformationDialogB dialogB = new MissingInformationDialogB();
+            dialogB.show(getFragmentManager(), "VER_B");
+        }
+        else matchVerifyC(null);
+    }
+    public void matchVerifyC(String matchNumber){
+        MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
+        if(matchNumber!=null)match.setMatch(matchNumber);
+        String teamNumber = match.getData()[2];
+        if(teamNumber.equals("")||teamNumber.equals(null)){
+            MissingInformationDialogC dialogC = new MissingInformationDialogC();
+            dialogC.show(getFragmentManager(), "VER_C");
+        }else matchVerifyD(null);
+    }
+    public void matchVerifyD(String team){
+        MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
+        if(team!=null)match.setNumber(team);
+        doSubmit();
+    }
+
+    public void cancelSubmit(){
+        Snackbar.make(findViewById(android.R.id.content), "Submit Canceled.", Snackbar.LENGTH_LONG).show();
     }
 }

@@ -14,15 +14,6 @@ import android.widget.Spinner;
 
 import team1100.scouting2017.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MatchFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MatchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MatchFragment extends Fragment {
     public MatchFragment() {
         // Required empty public constructor
@@ -174,5 +165,44 @@ public class MatchFragment extends Fragment {
             pauseData[1] = Integer.toString(Integer.parseInt(pauseData[1])+1);
             pauseData[2] = "";
         }
+    }
+    public void setMatch(String match){
+        try{
+            pauseData[1] = match;
+        }catch (Exception e){
+            pauseData = new String[4];
+            pauseData[1] = match;
+        }
+        try{
+            Activity v = getActivity();
+            EditText box = (EditText) v.findViewById(R.id.match_number);
+            box.setText(match);
+        }catch (Exception e){}
+    }
+    public void setNumber(String number){
+        try{
+            pauseData[2] = number;
+        }catch (Exception e){
+            pauseData = new String[4];
+            pauseData[2] = number;
+        }
+        try{
+            Activity v = getActivity();
+            EditText box = (EditText) v.findViewById(R.id.team_number);
+            box.setText(number);
+        }catch (Exception e){}
+    }
+    public void setName(String name){
+        try{
+            pauseData[0] = name;
+        }catch (Exception e){
+            pauseData = new String[4];
+            pauseData[0] = name;
+        }
+        try{
+            Activity v = getActivity();
+            EditText box = (EditText) v.findViewById(R.id.scouter_name);
+            box.setText(name);
+        }catch (Exception e){}
     }
 }
