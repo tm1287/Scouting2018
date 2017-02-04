@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class BluetoothActivity extends AppCompatActivity {
 
-    private static final int REQUEST_ENABLE_BT = 0;
+
     private static final UUID MY_UUID = UUID.fromString("551371ae-9714-41ca-8bcc-12651809e863");
     private BluetoothDevice device = null;
 
@@ -25,8 +25,13 @@ public class BluetoothActivity extends AppCompatActivity {
         this.device = getDevice();
         Intent intent = getIntent();
         String[] data = intent.getStringArrayExtra(MainActivity.EXTRA_BLUE_DATA);
+        launchRocket(data);
     }
-//TODO: check bluetooth, do shit, send
+
+    public void launchRocket(String[] data){
+        ConnectThread thread = new ConnectThread(getDevice(), data);
+    }
+
     public BluetoothDevice getDevice(){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -45,18 +50,7 @@ public class BluetoothActivity extends AppCompatActivity {
         //todo tell user that nothing is connected
         return null;
     }
-    public void checkBluetooth(){
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null) {
-            // Device does not support Bluetooth
-        }
-        if (!mBluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }else{
-            //TODO error dialog
-        }
-    }
+
 
 
     private class ConnectThread extends Thread {
@@ -89,7 +83,8 @@ public class BluetoothActivity extends AppCompatActivity {
                 for(String d : data){
                     mmSocket.getOutputStream().write(d.getBytes());
                 }
-                //TODO: if succesful, clear saved matches
+                //TODO: if succesful, clear saved matches? or maybe send everything and have computer ingore dupes?
+                this.cancel();
             } catch (IOException connectException) {
                 // Unable to connect; close the socket and return.
                 try {
@@ -110,15 +105,5 @@ public class BluetoothActivity extends AppCompatActivity {
             }
         }
     }
-    /*private class sendThread extends Thread{
-        private BluetoothSocket sock = null;
-        private String data = null;
-        public sendThread(BluetoothSocket socket, String data){
-            sock = socket;
-            this.data = data;
-        }
-        public void sockItToMe(){//#BlameMike (this is the send data method)
 
-        }
-    }*/
 }

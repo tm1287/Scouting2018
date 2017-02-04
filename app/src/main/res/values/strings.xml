@@ -32,4 +32,8 @@
     <string name="disabled_label">Robot disabled?</string>
     <string name="foul_label">Received penalty?</string>
     <string name="pilot_label">Sloppy pilot?</string>
+    <string name="title_activity_test_imma_delete_this">testImmaDeleteTHis</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_imma_delete_this_shit">immaDeleteTHisSHit</string>
+    <string name="delete_button_label">Delete Local Data</string>
 </resources>

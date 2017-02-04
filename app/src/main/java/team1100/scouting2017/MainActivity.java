@@ -1,7 +1,9 @@
 package team1100.scouting2017;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,14 +14,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -34,23 +39,16 @@ import team1100.scouting2017.tabFragments.MatchFragment;
 import team1100.scouting2017.tabFragments.TeleopFragment;
 
 
-public class MainActivity extends FragmentActivity {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+public class MainActivity extends AppCompatActivity {
+    private List<String> dataStore = new ArrayList<>();
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
     public List<String> fragments = new Vector<String>();
+
+    private static final int REQUEST_ENABLE_BT = 0;
+    public final static String EXTRA_BLUE_DATA = "com.blue.viking.harold";
+    public final static String EXTRA_MESSAGE = "com.zach.cool.MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         fragments.add(MatchFragment.class.getName());
@@ -65,6 +63,9 @@ public class MainActivity extends FragmentActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -82,14 +83,33 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        dataStore = retrieveData();
+        checkBluetooth();
     }
 
+    public void checkBluetooth(){
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Snackbar.make(findViewById(android.R.id.content),"This device does not have bluetooth!", Snackbar.LENGTH_LONG);
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }else{
+            Snackbar.make(findViewById(android.R.id.content),"Bluetooth is enabled!", Snackbar.LENGTH_LONG);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void openSettings(View view){
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
     }
 
     @Override
@@ -106,60 +126,67 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
      * Sends the data. Called by a positve response to the confirmation dialog.
      */
     public void doSubmit() {
-        System.out.println("Starting doSubmit");
-        String filename = "scoutingData";
-        System.out.println("Calling getMatchVaues()");
         String[] data = getMatchValues();
         if (data==null){
             Snackbar.make(findViewById(android.R.id.content), "Null data: Submit cancelled", Snackbar.LENGTH_LONG).show();
             return;
         }
-        //write to file
-        System.out.println("Starting file write");
+        String dataLine = "";
+        //Put array in a single line
+        for(int i =0; i<data.length; i++){
+            dataLine+=data[i]+"~";//Tilde will be used to split string for data storage
+        }
+        dataLine = dataLine.substring(0,dataLine.length()-1);
+
+        //Get all the data stored
+        addData(dataLine);
+
+        String[] bluData = new String[dataStore.size()];
+        for(int i =0; i<bluData.length;i++){
+            bluData[i]=dataStore.get(i);
+        }
+
+       testStrings(bluData);//TODO replace with sendBluetooth(bluData);
+    }
+
+    public void addData(String e){
+        dataStore.add(e);
+        writeData(dataStore);
+    }
+
+    public void writeData(List<String> data){
+        String filename = "scoutingData";
+        FileOutputStream outputStream;
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(getBaseContext().openFileOutput(filename,
-                    Context.MODE_PRIVATE));
-            String dataLine = "";
-            //Put array in a single line
-            for(int i =0; i<data.length; i++){
-                dataLine+=data[i]+"~";//Tilde will be used to split string for data storage
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            for(String d: data){
+                outputStream.write(d.getBytes());
             }
-            //trim ending ~
-            dataLine = dataLine.substring(0,dataLine.length()-1);
-            //Write to file
-            System.out.println("Writing data");
-            outputStreamWriter.write(dataLine);
-            outputStreamWriter.close();
+            outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //Attempt to send data to server
-        sendToBluetooth(retrieveData());
-
-        System.out.println("Finished collection and write");
-        testStrings(retrieveData());
-
     }
-    public final static String EXTRA_BLUE_DATA = "com.blue.viking.harold";
-    public void sendToBluetooth(String[] data){
+
+    public void sendBluetooth(String[] data){
         System.out.println("Launching Bluetooth Activity");
         Intent intent = new Intent(this,BluetoothActivity.class);
         intent.putExtra(EXTRA_BLUE_DATA, data);
         startActivity(intent);
     }
-    public final static String EXTRA_MESSAGE = "com.zach.iscool.MESSAGE";
+
     public void testStrings(String[] data){
         System.out.println("Launching Activity to Display Data");
         Intent intent = new Intent(this, StringTestActivity.class);
-        String message = data[0];
-        intent.putExtra(EXTRA_MESSAGE, message);
+        intent.putExtra(EXTRA_MESSAGE, data);
         startActivity(intent);
     }
+
     private String[] getMatchValues() {
         System.out.println("Attempting to get match values");
         System.out.println("Getting fragment manager");
@@ -210,17 +237,13 @@ public class MainActivity extends FragmentActivity {
         return values;
     }
 
-    public String[]  retrieveData() {
-        System.out.println("Retrieving data");
-        //read from file
+    public List<String>  retrieveData() {
         String filename = "scoutingData";
         List<String> data = new ArrayList<>();
         try{
-            System.out.println("Creating input stream");
             InputStream inputStream = getBaseContext().openFileInput(filename);
 
             if(inputStream != null){
-                System.out.println("Input stream != null");
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String line = "";
@@ -233,12 +256,7 @@ public class MainActivity extends FragmentActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("Returning data array");
-        String[] ret = new String[data.size()];
-        for(int i =0; i<ret.length; i++){
-            ret[i] = data.get(i);
-        }
-        return ret;
+        return data;
     }
 
     /**

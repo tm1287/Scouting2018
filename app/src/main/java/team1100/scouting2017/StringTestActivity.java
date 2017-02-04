@@ -14,11 +14,14 @@ public class StringTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_string_test);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        String[] message = intent.getStringArrayExtra(MainActivity.EXTRA_MESSAGE);
         TextView textView = new TextView(this);
         textView.setTextSize(40);
-        textView.setText(message);
-
+        String text = "";
+        for(String d :message){
+            text+=d;
+        }
+        textView.setText(text);
         ViewGroup layout = (ViewGroup) findViewById(R.id.activity_string_test);
         layout.addView(textView);
 
