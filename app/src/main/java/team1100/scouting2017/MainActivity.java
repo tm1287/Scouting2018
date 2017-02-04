@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import team1100.scouting2017.Dialogs.ConfirmationDialog;
+import team1100.scouting2017.Dialogs.Verification.MissingInformationDialogA;
+import team1100.scouting2017.Dialogs.Verification.MissingInformationDialogB;
+import team1100.scouting2017.Dialogs.Verification.MissingInformationDialogC;
 import team1100.scouting2017.tabFragments.AutoFragment;
 import team1100.scouting2017.tabFragments.InfoFragment;
 import team1100.scouting2017.tabFragments.MatchFragment;
@@ -133,13 +137,22 @@ public class MainActivity extends FragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         //Attempt to send data to server
-        //TODO SEND THIS LIST retrieveData();
-        System.out.println("Finished collection and write, testing retrieval and display");
+        sendToBluetooth(retrieveData());
+
+        System.out.println("Finished collection and write");
         testStrings(retrieveData());
 
     }
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    public final static String EXTRA_BLUE_DATA = "com.blue.viking.harold";
+    public void sendToBluetooth(String[] data){
+        System.out.println("Launching Bluetooth Activity");
+        Intent intent = new Intent(this,BluetoothActivity.class);
+        intent.putExtra(EXTRA_BLUE_DATA, data);
+        startActivity(intent);
+    }
+    public final static String EXTRA_MESSAGE = "com.zach.iscool.MESSAGE";
     public void testStrings(String[] data){
         System.out.println("Launching Activity to Display Data");
         Intent intent = new Intent(this, StringTestActivity.class);
@@ -280,7 +293,7 @@ public class MainActivity extends FragmentActivity {
     public void matchVerifyA(){
         MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
         String name = match.getData()[0];
-        if(name.equals("")||name.equals(null)){
+        if(name.equals("")||name.equals(null)||name.contains("~")){
             MissingInformationDialogA dialogA = new MissingInformationDialogA();
             dialogA.show(getFragmentManager(), "VER_A");
         }
@@ -290,7 +303,7 @@ public class MainActivity extends FragmentActivity {
         MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
         if(name!=null)match.setName(name);
         String matchNumber = match.getData()[1];
-        if(matchNumber.equals("")||matchNumber.equals(null)){
+        if(matchNumber.equals("")||matchNumber.equals(null)||Integer.parseInt(matchNumber)>150){
             MissingInformationDialogB dialogB = new MissingInformationDialogB();
             dialogB.show(getFragmentManager(), "VER_B");
         }
@@ -300,7 +313,7 @@ public class MainActivity extends FragmentActivity {
         MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
         if(matchNumber!=null)match.setMatch(matchNumber);
         String teamNumber = match.getData()[2];
-        if(teamNumber.equals("")||teamNumber.equals(null)){
+        if(teamNumber.equals("")||teamNumber.equals(null)||Integer.parseInt(teamNumber)>7000){
             MissingInformationDialogC dialogC = new MissingInformationDialogC();
             dialogC.show(getFragmentManager(), "VER_C");
         }else matchVerifyD(null);
@@ -310,7 +323,6 @@ public class MainActivity extends FragmentActivity {
         if(team!=null)match.setNumber(team);
         doSubmit();
     }
-
     public void cancelSubmit(){
         Snackbar.make(findViewById(android.R.id.content), "Submit Canceled.", Snackbar.LENGTH_LONG).show();
     }

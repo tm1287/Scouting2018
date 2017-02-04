@@ -1,10 +1,12 @@
-package team1100.scouting2017;
+package team1100.scouting2017.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import team1100.scouting2017.MainActivity;
 
 /**
  * Created by 1100Admin on 1/23/2017.

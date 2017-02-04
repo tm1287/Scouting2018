@@ -1,4 +1,4 @@
-package team1100.scouting2017;
+package team1100.scouting2017.Dialogs.Verification;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+
+import team1100.scouting2017.MainActivity;
 
 /**
  * Created by 1100Admin on 1/30/2017.
@@ -29,7 +31,7 @@ public class MissingInformationDialogA extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = input.getText().toString();
-                if(!value.equals("")){
+                if(!value.equals("")&&!value.contains("~")){
                     ((MainActivity)getActivity()).matchVerifyB(value);
                 }else ((MainActivity)getActivity()).matchVerifyA();
             }

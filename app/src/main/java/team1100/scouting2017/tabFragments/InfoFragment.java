@@ -13,14 +13,7 @@ import android.widget.CheckBox;
 import team1100.scouting2017.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link InfoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link InfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class InfoFragment extends Fragment {
     public InfoFragment() {
         // Required empty public constructor
