@@ -52,7 +52,6 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
 
-
     private class ConnectThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;
@@ -83,7 +82,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 for(String d : data){
                     mmSocket.getOutputStream().write(d.getBytes());
                 }
-                //TODO: if succesful, clear saved matches? or maybe send everything and have computer ingore dupes?
                 this.cancel();
             } catch (IOException connectException) {
                 // Unable to connect; close the socket and return.

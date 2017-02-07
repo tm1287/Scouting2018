@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="team1100.scouting2017.Settings"
+    tools:context="team1100.scouting2017.MenuItems.Settings"
     android:orientation="vertical">
 
     <Button
@@ -16,7 +16,18 @@
         android:layout_height="wrap_content"
         android:text="@string/delete_button_label"
         android:textAllCaps="false"
-        android:textSize="15pt"/>
-
+        android:textSize="15pt"
+        android:onClick="deleteData"/>
+    <!--Spacer Space-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/team_list_label"
+        android:textAllCaps="false"
+        android:textSize="15pt"
+        android:onClick="setTeamList"/>
 
 </LinearLayout>

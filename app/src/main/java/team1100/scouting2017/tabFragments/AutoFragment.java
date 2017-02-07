@@ -2,7 +2,6 @@ package team1100.scouting2017.tabFragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,8 +11,6 @@ import android.widget.CheckBox;
 import android.widget.NumberPicker;
 
 import team1100.scouting2017.R;
-
-import static team1100.scouting2017.R.id.container;
 
 /**
  * A simple {@link Fragment} subclass.

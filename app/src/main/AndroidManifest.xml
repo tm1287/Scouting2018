@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".StringTestActivity" />
         <activity android:name=".BluetoothActivity" />
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".MenuItems.Settings" />
+        <activity android:name=".MenuItems.Schedule"></activity>
     </application>
 
 </manifest>

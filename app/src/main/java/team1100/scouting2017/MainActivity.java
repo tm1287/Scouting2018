@@ -3,11 +3,9 @@ package team1100.scouting2017;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,6 +31,7 @@ import team1100.scouting2017.Dialogs.ConfirmationDialog;
 import team1100.scouting2017.Dialogs.Verification.MissingInformationDialogA;
 import team1100.scouting2017.Dialogs.Verification.MissingInformationDialogB;
 import team1100.scouting2017.Dialogs.Verification.MissingInformationDialogC;
+import team1100.scouting2017.MenuItems.Settings;
 import team1100.scouting2017.tabFragments.AutoFragment;
 import team1100.scouting2017.tabFragments.InfoFragment;
 import team1100.scouting2017.tabFragments.MatchFragment;
@@ -90,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
     public void checkBluetooth(){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            Snackbar.make(findViewById(android.R.id.content),"This device does not have bluetooth!", Snackbar.LENGTH_LONG);
+            Snackbar.make(findViewById(android.R.id.content),"This device does not have bluetooth!", Snackbar.LENGTH_LONG).show();
         }
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }else{
-            Snackbar.make(findViewById(android.R.id.content),"Bluetooth is enabled!", Snackbar.LENGTH_LONG);
+            Snackbar.make(findViewById(android.R.id.content),"Bluetooth is enabled!", Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -107,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void openSettings(View view){
+    public void openSettings(){
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
+    public void openSchedule(){}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -120,12 +120,16 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            openSettings();
+            return true;
+        }
+        if(id==R.id.action_schedule){
+            openSchedule();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
     /**
      * Sends the data. Called by a positve response to the confirmation dialog.
@@ -331,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
         MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
         if(matchNumber!=null)match.setMatch(matchNumber);
         String teamNumber = match.getData()[2];
-        if(teamNumber.equals("")||teamNumber.equals(null)||Integer.parseInt(teamNumber)>7000){
+        if(teamNumber.equals("")||teamNumber.equals(null)||Integer.parseInt(teamNumber)>7000||!match.teamOnList(teamNumber)){
             MissingInformationDialogC dialogC = new MissingInformationDialogC();
             dialogC.show(getFragmentManager(), "VER_C");
         }else matchVerifyD(null);

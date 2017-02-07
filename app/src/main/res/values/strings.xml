@@ -36,4 +36,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_imma_delete_this_shit">immaDeleteTHisSHit</string>
     <string name="delete_button_label">Delete Local Data</string>
+    <string name="action_schedule">Schedule</string>
+    <string name="event_settings_label">Enter Event Information</string>
+    <string name="team_list_label">Enter Team List</string>
 </resources>

@@ -4,7 +4,12 @@
     tools:context="team1100.scouting2017.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_schedule"
+        android:orderInCategory="2"
+        android:title="@string/action_schedule"
+        app:showAsAction="never"/>
 </menu>

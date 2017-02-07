@@ -2,7 +2,6 @@ package team1100.scouting2017.tabFragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,14 +12,6 @@ import android.widget.NumberPicker;
 
 import team1100.scouting2017.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TeleopFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TeleopFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TeleopFragment extends Fragment {
     public TeleopFragment() {
         // Required empty public constructor

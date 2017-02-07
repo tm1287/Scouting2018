@@ -2,8 +2,8 @@ package team1100.scouting2017.tabFragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import team1100.scouting2017.R;
 
@@ -204,5 +210,35 @@ public class MatchFragment extends Fragment {
             EditText box = (EditText) v.findViewById(R.id.scouter_name);
             box.setText(name);
         }catch (Exception e){}
+    }
+    public boolean teamOnList(String team){
+        boolean onList = false;
+        String filename = "teamList";
+        List<String> teams = new ArrayList<>();
+        try{
+            InputStream inputStream = getActivity().openFileInput(filename);
+
+            if(inputStream != null){
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String line = "";
+                while ((line=bufferedReader.readLine())!=null){
+                    teams.add(line);
+                }
+            }
+            inputStream.close();
+        }catch (Exception e){
+            onList = true;
+            Snackbar.make(getView(), "Team list error: accepting all numbers." , Snackbar.LENGTH_LONG).show();
+        }
+        if(teams.size()==0){
+            onList = true;
+            Snackbar.make(getView(), "Team list empty! Accepting all numbers.", Snackbar.LENGTH_LONG).show();
+        }
+        if(teams.contains(team)){
+            onList = true;
+        }
+
+        return onList;
     }
 }
