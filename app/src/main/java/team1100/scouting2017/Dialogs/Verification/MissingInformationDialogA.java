@@ -31,7 +31,7 @@ public class MissingInformationDialogA extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String value = input.getText().toString();
-                if(!value.equals("")&&!value.contains("~")){
+                if(!value.equals("")&&!value.contains(",")){
                     ((MainActivity)getActivity()).matchVerifyB(value);
                 }else ((MainActivity)getActivity()).matchVerifyA();
             }

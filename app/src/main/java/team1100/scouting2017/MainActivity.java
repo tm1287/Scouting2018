@@ -1,5 +1,6 @@
 package team1100.scouting2017;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import team1100.scouting2017.Dialogs.ConfirmationDialog;
@@ -39,14 +41,15 @@ import team1100.scouting2017.tabFragments.TeleopFragment;
 
 
 public class MainActivity extends AppCompatActivity {
-    private List<String> dataStore = new ArrayList<>();
+    private static List<String> dataStore = new ArrayList<>();
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     public List<String> fragments = new Vector<String>();
 
     private static final int REQUEST_ENABLE_BT = 0;
     public final static String EXTRA_BLUE_DATA = "com.blue.viking.harold";
-    public final static String EXTRA_MESSAGE = "com.zach.cool.MESSAGE";
+    public final static String EXTRA_MESSAGE = "com.letter.hermes.string";
+    public static final String EXTRA_TABLET_NUMBER = "com.frustration.uuid.switch";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
-    public void openSchedule(){}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -121,10 +123,6 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             openSettings();
-            return true;
-        }
-        if(id==R.id.action_schedule){
-            openSchedule();
             return true;
         }
 
@@ -143,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         String dataLine = "";
         //Put array in a single line
         for(int i =0; i<data.length; i++){
-            dataLine+=data[i]+"~";//Tilde will be used to split string for data storage
+            dataLine+=data[i]+",";//Comma Separated Values
         }
         dataLine = dataLine.substring(0,dataLine.length()-1);
 
@@ -154,8 +152,13 @@ public class MainActivity extends AppCompatActivity {
         for(int i =0; i<bluData.length;i++){
             bluData[i]=dataStore.get(i);
         }
+        for(String d: data){
+            System.out.print(d);
+        }
+        System.out.println();
 
-       testStrings(bluData);//TODO replace with sendBluetooth(bluData);
+        sendBluetooth(bluData);
+        //testStrings(bluData);
     }
 
     public void addData(String e){
@@ -169,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
             for(String d: data){
-                outputStream.write(d.getBytes());
+                outputStream.write((d+"\n").getBytes());
             }
             outputStream.close();
         } catch (Exception e) {
@@ -178,9 +181,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendBluetooth(String[] data){
-        System.out.println("Launching Bluetooth Activity");
         Intent intent = new Intent(this,BluetoothActivity.class);
         intent.putExtra(EXTRA_BLUE_DATA, data);
+        intent.putExtra(EXTRA_TABLET_NUMBER, Integer.toString(((MatchFragment)getSupportFragmentManager().getFragments().get(0)).getPosition()));
         startActivity(intent);
     }
 
@@ -202,7 +205,12 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Getting Auto tab");
         AutoFragment auto = (AutoFragment) tabs.get(1);
         System.out.println("Getting Tele tab");
-        TeleopFragment tele = (TeleopFragment) tabs.get(2);
+        TeleopFragment tele = null;
+        try{
+            tele = (TeleopFragment) tabs.get(2);
+        }catch (Exception e){
+            return null;
+        }
         System.out.println("Getting Info tab");
         InfoFragment info = (InfoFragment) tabs.get(3);
         System.out.println("Getting match data");
@@ -254,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("About to read");
                 while ((line=bufferedReader.readLine())!=null){
                     System.out.println("Adding data: " + line);
-                    data.add(line);
+                    data.add(line+"\n");
                 }
             }
         }catch (Exception e){
@@ -315,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
     public void matchVerifyA(){
         MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
         String name = match.getData()[0];
-        if(name.equals("")||name.equals(null)||name.contains("~")){
+        if(name.equals("")||name.equals(null)||name.contains(",")){
             MissingInformationDialogA dialogA = new MissingInformationDialogA();
             dialogA.show(getFragmentManager(), "VER_A");
         }
@@ -347,5 +355,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void cancelSubmit(){
         Snackbar.make(findViewById(android.R.id.content), "Submit Canceled.", Snackbar.LENGTH_LONG).show();
+    }
+    public static void clearDataStore(){
+        dataStore.clear();
     }
 }

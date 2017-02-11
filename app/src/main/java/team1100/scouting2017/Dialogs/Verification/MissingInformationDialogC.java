@@ -71,11 +71,11 @@ public class MissingInformationDialogC extends DialogFragment {
             inputStream.close();
         }catch (Exception e){
             onList = true;
-            Snackbar.make(getView(), "Team list error: accepting all numbers." , Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(getView(), "Team list error: accepting all numbers." , Snackbar.LENGTH_LONG).show();
         }
         if(teams.size()==0){
             onList = true;
-            Snackbar.make(getView(), "Team list empty! Accepting all numbers.", Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(getView(), "Team list empty! Accepting all numbers.", Snackbar.LENGTH_LONG).show();
         }
         if(teams.contains(team)){
             onList = true;

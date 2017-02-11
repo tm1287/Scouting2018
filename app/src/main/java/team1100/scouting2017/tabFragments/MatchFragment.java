@@ -31,11 +31,6 @@ public class MatchFragment extends Fragment {
      *
      * @return A new instance of fragment MatchFragment.
      */
-    public static MatchFragment newInstance() {
-        MatchFragment fragment = new MatchFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +76,6 @@ public class MatchFragment extends Fragment {
 
             int position =  position_spin.getSelectedItemPosition();
 
-
             data[0] = name.getText().toString();
             data[1] = match.getText().toString();
             data[2] = number.getText().toString();
@@ -97,22 +91,22 @@ public class MatchFragment extends Fragment {
     public String getPositionLabel(int position){
         String text;
         switch (position){
-            case 1:
+            case 0:
                 text = "Red 1";
                 break;
-            case 2:
+            case 1:
                 text = "Red 2";
                 break;
-            case 3:
+            case 2:
                 text = "Red 3";
                 break;
-            case 4:
+            case 3:
                 text = "Blue 1";
                 break;
-            case 5:
+            case 4:
                 text = "Blue 2";
                 break;
-            case 6:
+            case 5:
                 text = "Blue 3";
                 break;
             default:
@@ -211,6 +205,18 @@ public class MatchFragment extends Fragment {
             box.setText(name);
         }catch (Exception e){}
     }
+
+    public int getPosition(){
+        try{
+            Activity v = getActivity();
+            Spinner position_spin = (Spinner)v.findViewById(R.id.position_spinner);
+            int position = position_spin.getSelectedItemPosition();
+            return position;
+        }catch (Exception e){
+            return Integer.parseInt(pauseData[3]);
+        }
+    }
+
     public boolean teamOnList(String team){
         boolean onList = false;
         String filename = "teamList";
@@ -229,11 +235,11 @@ public class MatchFragment extends Fragment {
             inputStream.close();
         }catch (Exception e){
             onList = true;
-            Snackbar.make(getView(), "Team list error: accepting all numbers." , Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(getView(), "Team list error: accepting all numbers." , Snackbar.LENGTH_LONG).show();
         }
         if(teams.size()==0){
             onList = true;
-            Snackbar.make(getView(), "Team list empty! Accepting all numbers.", Snackbar.LENGTH_LONG).show();
+            //Snackbar.make(getView(), "Team list empty! Accepting all numbers.", Snackbar.LENGTH_LONG).show();
         }
         if(teams.contains(team)){
             onList = true;

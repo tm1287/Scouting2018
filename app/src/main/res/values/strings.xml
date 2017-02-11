@@ -39,4 +39,5 @@
     <string name="action_schedule">Schedule</string>
     <string name="event_settings_label">Enter Event Information</string>
     <string name="team_list_label">Enter Team List</string>
+    <string name="id_label">Enter Tablet Number</string>
 </resources>

@@ -23,7 +23,6 @@
         <activity android:name=".StringTestActivity" />
         <activity android:name=".BluetoothActivity" />
         <activity android:name=".MenuItems.Settings" />
-        <activity android:name=".MenuItems.Schedule"></activity>
     </application>
 
 </manifest>
