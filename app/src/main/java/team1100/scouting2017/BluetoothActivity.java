@@ -21,6 +21,8 @@ public class BluetoothActivity extends AppCompatActivity {
 
     private static UUID MY_UUID;
 
+    private ConnectThread thread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +59,19 @@ public class BluetoothActivity extends AppCompatActivity {
         }catch(Exception itsAllGoodFam){}
 
         setDisplayText("Sending data to server");
-        ConnectThread thread = new ConnectThread(getDevice(), data);
+        thread = new ConnectThread(getDevice(), data);
         thread.start();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        thread.cancel();
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        thread.cancel();
     }
 
     private void setDisplayText(String message){
@@ -123,15 +136,15 @@ public class BluetoothActivity extends AppCompatActivity {
                 //setDisplayText("Data Sent.");
             } catch (Exception connectException) {
                 System.out.println("SERVER CONNECTION FAILED");
-                // Unable to connect; close the socket and return.
+                /*// Unable to connect; close the socket and return.
                 try {
                     mmSocket.close();
                 } catch (Exception closeException) {
                     //Log.e(TAG, "Could not close the client socket", closeException);
-                }
+                }*/
                 return;
             }
-            cancel();
+            //cancel();
         }
 
         // Closes the client socket and causes the thread to finish.
