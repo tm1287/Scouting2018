@@ -8,10 +8,13 @@ import android.os.ParcelUuid;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.Set;
 import java.util.UUID;
+
+import team1100.scouting2017.tabFragments.MatchFragment;
 
 public class BluetoothActivity extends AppCompatActivity {
 
@@ -48,12 +51,22 @@ public class BluetoothActivity extends AppCompatActivity {
                 MY_UUID = UUID.fromString("551371ae-9714-41ca-8bcc-12651809e863");
                 break;
         }
+        //Fixes the position label problem
+        try{
+            data[3] = MatchFragment.getPositionLabel(Integer.parseInt(data[3]));
+        }catch(Exception itsAllGoodFam){}
 
+        setDisplayText("Sending data to server");
         ConnectThread thread = new ConnectThread(getDevice(), data);
         thread.start();
     }
 
-    public BluetoothDevice getDevice(){
+    private void setDisplayText(String message){
+        TextView display = (TextView) findViewById(R.id.blu_info_display);
+        display.setText(message);
+    }
+
+    private BluetoothDevice getDevice(){
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
@@ -72,7 +85,6 @@ public class BluetoothActivity extends AppCompatActivity {
         }
         return null;
     }
-
 
     private class ConnectThread extends Thread {
         private final BluetoothSocket mmSocket;
@@ -108,7 +120,9 @@ public class BluetoothActivity extends AppCompatActivity {
                 mmSocket.getOutputStream().write(packet.getBytes());
                 System.out.println("Packet: " + packet);
                 System.out.println("Packet is "+ packet.getBytes().length + " bytes long ("+data.length+" matches).");
+                //setDisplayText("Data Sent.");
             } catch (Exception connectException) {
+                System.out.println("SERVER CONNECTION FAILED");
                 // Unable to connect; close the socket and return.
                 try {
                     mmSocket.close();

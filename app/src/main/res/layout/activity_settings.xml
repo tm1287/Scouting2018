@@ -20,7 +20,8 @@
         android:onClick="deleteData"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,13 +31,18 @@
         android:onClick="setTeamList"/>
     <View
     android:layout_width="match_parent"
-    android:layout_height="10dp"/>
-   <!-- <Button
+    android:layout_height="0dp"
+    android:layout_weight="1"/>
+   <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/id_label"
+        android:text="@string/event_settings_label"
         android:textAllCaps="false"
         android:textSize="15pt"
-        android:onClick="promptTabletNumber"/> -->
+        android:onClick="selectEvent"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>

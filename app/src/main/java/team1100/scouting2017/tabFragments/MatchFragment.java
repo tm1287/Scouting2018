@@ -88,7 +88,7 @@ public class MatchFragment extends Fragment {
         return data;
     }
 
-    public String getPositionLabel(int position){
+    public static String getPositionLabel(int position){
         String text;
         switch (position){
             case 0:
@@ -229,7 +229,7 @@ public class MatchFragment extends Fragment {
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String line = "";
                 while ((line=bufferedReader.readLine())!=null){
-                    teams.add(line);
+                    teams.add(line.replace("\n",""));
                 }
             }
             inputStream.close();

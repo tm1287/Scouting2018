@@ -32,12 +32,9 @@
     <string name="disabled_label">Robot disabled?</string>
     <string name="foul_label">Received penalty?</string>
     <string name="pilot_label">Sloppy pilot?</string>
-    <string name="title_activity_test_imma_delete_this">testImmaDeleteTHis</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_imma_delete_this_shit">immaDeleteTHisSHit</string>
     <string name="delete_button_label">Delete Local Data</string>
     <string name="action_schedule">Schedule</string>
-    <string name="event_settings_label">Enter Event Information</string>
+    <string name="event_settings_label">Select Event</string>
     <string name="team_list_label">Enter Team List</string>
-    <string name="id_label">Enter Tablet Number</string>
+    <string name="bluetooth_heading">Bluetooth Service</string>
 </resources>

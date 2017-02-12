@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 
 import team1100.scouting2017.Dialogs.DeletionPasswordDialog;
 import team1100.scouting2017.Dialogs.EnterTeamListDialog;
-import team1100.scouting2017.Dialogs.TabletNumberDialog;
+import team1100.scouting2017.Dialogs.EventSelectionDialog;
 import team1100.scouting2017.MainActivity;
 import team1100.scouting2017.R;
 
@@ -22,10 +22,6 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-    }
-    @Deprecated
-    public static int getTabletNumber(){
-        return number;
     }
 
     public void deleteData(View view){
@@ -58,7 +54,7 @@ public class Settings extends AppCompatActivity {
         try {
             outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
             for(String t: teams){
-                outputStream.write(t.getBytes());
+                outputStream.write((t+"\n").getBytes());
             }
             outputStream.close();
         } catch (Exception e) {
@@ -68,13 +64,8 @@ public class Settings extends AppCompatActivity {
     public void cancelPasswordMessage(){
         Snackbar.make(findViewById(android.R.id.content),"Hey! What are you trying to do!", Snackbar.LENGTH_LONG).show();
     }
-    @Deprecated
-    public void promptTabletNumber(View view){
-        TabletNumberDialog dialog = new TabletNumberDialog();
-        dialog.show(getFragmentManager(), "TAB_ENTRY");
-    }
-    @Deprecated
-    public void setTabletNumber(int n){
-        number = n;
+    public void selectEvent(View view){
+        EventSelectionDialog dialog = new EventSelectionDialog();
+        dialog.show(getFragmentManager(), "EVENT_GET");
     }
 }

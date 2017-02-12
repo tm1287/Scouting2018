@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
         InfoFragment info = (InfoFragment) tabs.get(3);
         System.out.println("Getting match data");
         String[] matchData = match.getData();
+
         System.out.println("Getting auto data");
         String[] autoData = auto.getData();
         System.out.println("Getting tele data");
