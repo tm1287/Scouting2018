@@ -34,9 +34,9 @@ public class EventSelectionDialog extends DialogFragment {
         ri.setText("Rhode Island");
         RadioButton other = new RadioButton(getActivity());
         other.setText("Manual");
-        input.addView(nh, 0);
-        input.addView(ri, 1);
-        input.addView(other,2);
+        input.addView(nh, 1);
+        input.addView(ri, 2);
+        input.addView(other,3);
         builder.setView(input);
         builder.setTitle("Choose an Event:");
         builder.setPositiveButton("ENTER", new DialogInterface.OnClickListener() {
@@ -44,10 +44,10 @@ public class EventSelectionDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
                 int choice = input.getCheckedRadioButtonId();
                 switch (choice){
-                    case 0:
+                    case 1:
                         ((Settings)getActivity()).writeTeams(newHampshireTeams);
                         break;
-                    case 1:
+                    case 2:
                         ((Settings)getActivity()).writeTeams(rhodeIslandTeams);
                         break;
                     default:
