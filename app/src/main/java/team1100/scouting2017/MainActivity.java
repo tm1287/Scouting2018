@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.jar.Attributes;
 
 import team1100.scouting2017.Dialogs.ConfirmationDialog;
 import team1100.scouting2017.Dialogs.Verification.MissingInformationDialogA;
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.clearOnTabSelectedListeners();
+        tabLayout.addOnTabSelectedListener(new NoSlideOnTabSelectedListener());
 
         for(int i =0; i<4; i++)tabLayout.getTabAt(i);
 
@@ -282,44 +286,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            return Fragment.instantiate(getBaseContext(), fragmentsA.get(position));
-
-        }
-
-        public List<String> fragmentsA;
-
-
-        public SectionsPagerAdapter(FragmentManager fm){
-            super(fm);
-            fragmentsA = fragments;
-        }
-
-        @Override
-        public int getCount() {
-            // Show total pages.
-            return 4;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "MATCH";
-                case 1:
-                    return "AUTO";
-                case 2:
-                    return "TELEOP";
-                case 3:
-                    return "INFO";
-            }
-            return null;
-        }
-    }
 
     public void matchVerifyA(){
         MatchFragment match = (MatchFragment) getSupportFragmentManager().getFragments().get(0);
@@ -354,10 +321,68 @@ public class MainActivity extends AppCompatActivity {
         if(team!=null)match.setNumber(team);
         doSubmit();
     }
+
     public void cancelSubmit(){
         Snackbar.make(findViewById(android.R.id.content), "Submit Canceled.", Snackbar.LENGTH_LONG).show();
     }
+
     public static void clearDataStore(){
         dataStore.clear();
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            return Fragment.instantiate(getBaseContext(), fragmentsA.get(position));
+
+        }
+
+        public List<String> fragmentsA;
+
+        public SectionsPagerAdapter(FragmentManager fm){
+            super(fm);
+            fragmentsA = fragments;
+            for(int i =0; i<getCount();i++) getItem(i);
+        }
+
+        @Override
+        public int getCount() {
+            // Show total pages.
+            return 4;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "MATCH";
+                case 1:
+                    return "AUTO";
+                case 2:
+                    return "TELEOP";
+                case 3:
+                    return "INFO";
+            }
+            return null;
+        }
+    }
+
+    public class NoSlideOnTabSelectedListener implements TabLayout.OnTabSelectedListener{
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            mViewPager.setCurrentItem(tab.getPosition(),false);
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
     }
 }
