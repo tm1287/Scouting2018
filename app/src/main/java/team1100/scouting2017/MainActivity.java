@@ -213,13 +213,12 @@ public class MainActivity extends AppCompatActivity {
         try{
             tele = (TeleopFragment) tabs.get(2);
         }catch (Exception e){
-            return null;
+            tele = new TeleopFragment();
         }
         System.out.println("Getting Info tab");
         InfoFragment info = (InfoFragment) tabs.get(3);
         System.out.println("Getting match data");
         String[] matchData = match.getData();
-
         System.out.println("Getting auto data");
         String[] autoData = auto.getData();
         System.out.println("Getting tele data");
