@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Scouting 2017</string>
+    <string name="app_name">Scouting 2018</string>
     <string name="action_settings">Settings</string>
     <string name="scouter_label">Scouter Name:</string>
     <string name="match_label">Match Number:</string>
@@ -17,21 +17,21 @@
         <item>Blue 2</item>
         <item>Blue 3</item>
     </string-array>
-    <string name="high_auto_label">Fuel Scored High:</string>
-    <string name="low_auto_label">Fuel Scored Low:</string>
-    <string name="gear_auto_label">Gears scored:</string>
+    <string name="scale_auto_label">Cubes Scored in Scale:</string>
+    <string name="switch_auto_label">Cube Scored in Switch:</string>
+    <string name="vault_auto_label"> Cubes Placed in Vault:</string>
     <string name="line_auto_label">Line Crossed?</string>
     <string name="line_auto_box_label">Check only if black line was crossed</string>
-    <string name="fuel_high_label">Fuel Scored High:</string>
-    <string name="fuel_low_label">Fuel Scored Low:</string>
-    <string name="gear_tele_label">Gears Loaded:</string>
-    <string name="climb_label">Climb Light On?</string>
-    <string name="climb_check_text">Check only if light is on after match ends</string>
+    <string name="cube_scale_label">Cubes Scored in Scale:</string>
+    <string name="cube_switch_label">Cubes Scored in Switch:</string>
+    <string name="vault_tele_label">Cubes Loaded into Vault:</string>
+    <string name="climb_label">Did they Climb?</string>
+    <string name="climb_check_text">Check only if still on bar @ end of match</string>
     <string name="no_show_label">No show?</string>
     <string name="broken_label">Robot broken?</string>
     <string name="disabled_label">Robot disabled?</string>
     <string name="foul_label">Received penalty?</string>
-    <string name="pilot_label">Sloppy pilot?</string>
+    <string name="pilot_label">Sloppy Human Player?</string>
     <string name="delete_button_label">Delete Local Data</string>
     <string name="action_schedule">Schedule</string>
     <string name="event_settings_label">Select Event</string>

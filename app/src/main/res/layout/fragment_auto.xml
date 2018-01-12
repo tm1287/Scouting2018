@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:text="@string/high_auto_label"
+        android:text="@string/scale_auto_label"
         android:textColor="#000000"
         android:textSize="12pt"/>
     <NumberPicker
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:text="@string/low_auto_label"
+        android:text="@string/scale_auto_label"
         android:textColor="#000000"
         android:textSize="12pt" />
     <NumberPicker
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:text="@string/gear_auto_label"
+        android:text="@string/vault_auto_label"
         android:textColor="#000000"
         android:textSize="11pt" />
     <NumberPicker

@@ -10,7 +10,7 @@
         android:layout_weight=".5"
         android:textSize="11pt"
         android:textColor="#000000"
-        android:text="@string/fuel_high_label"/>
+        android:text="@string/cube_scale_label"/>
     <NumberPicker
         android:id="@+id/high_tele_picker"
         android:inputType="number"
@@ -25,7 +25,7 @@
         android:layout_weight=".5"
         android:textSize="11pt"
         android:textColor="#000000"
-        android:text="@string/fuel_low_label"/>
+        android:text="@string/cube_switch_label"/>
     <NumberPicker
         android:id="@+id/low_tele_picker"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         android:layout_weight=".5"
         android:textSize="11pt"
         android:textColor="#000000"
-        android:text="@string/gear_tele_label"/>
+        android:text="@string/vault_tele_label"/>
     <NumberPicker
         android:id="@+id/gear_tele_picker"
         android:layout_width="match_parent"
